@@ -1,3 +1,5 @@
+# vanya_functools
+
 Vanya is the nickname of Ivan Fyodorovich Karamazov.
 
 `vanya_functools` provides functional programming tools in python which can be achieved, but not necessarily should be achieved.
