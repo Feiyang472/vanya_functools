@@ -26,7 +26,7 @@ from functools import cached_property
 from multiprocessing.pool import ThreadPool
 import time
 
-from vanya_functools.vanya_functools.lazylock import Kundera
+from vanya_functools.lazylock import Kundera
 
 
 @dataclass(slots=True)
