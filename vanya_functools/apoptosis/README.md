@@ -1,0 +1,1 @@
+## TODO: programmed sudden inaccesibility of any python attribute
