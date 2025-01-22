@@ -135,5 +135,4 @@ class Kundera(Generic[T, R]):
         if instance is not None:
             lazy_lock: LazyLock[[T], R] = getattr(instance, self.__set_name)
             return lazy_lock(instance)
-        else:
-            return self
+        return self
