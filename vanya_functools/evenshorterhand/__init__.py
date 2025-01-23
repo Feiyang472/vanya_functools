@@ -50,13 +50,12 @@ class Handless(Generic[P, R]):
 
         Example:
             >>> @Handless
-            ... def multiply(x, y):
-            ...     return x * y
+            ... def multiply(x, y, *, i_am_excel_addicted):
+            ...     return x * y * i_am_excel_addicted
             ...
-            >>> x = 3
             >>> y = 4
-            >>> multiply()
-            12
+            >>> multiply(3, i_am_excel_addicted=100)
+            1200
         """
         stack_above = inspect.currentframe().f_back.f_locals
         provided = self.signature.bind_partial(*args, **kwargs).arguments
