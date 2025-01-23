@@ -16,18 +16,18 @@ One might even be reminded that argument names can be omitted at struct init in 
 The `evenshorterhand` module brings this idea to the extreme, where decorated functions will automatically absorb all relevant arguments needed for any callable which are not explictly provided.
 
 ```python
-from vanya_functools.evenshorterhand import Handless
+>>> from vanya_functools.evenshorterhand import Handless
 
 
-@Handless
-def add(a: int, b: int, /, *, c) -> int:
-    return a + b + c
-
-
-c = 3
-
-add(1, 2)
->>> 6
+>>> @Handless
+... def add(a: int, b: int, /, *, c) -> int:
+...     return a + b + c
+... 
+... 
+... c = 3
+... 
+... add(1, 2)
+6
 ```
 Or you can do the following.
 ```python

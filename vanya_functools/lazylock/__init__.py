@@ -73,15 +73,15 @@ class Kundera(Generic[T, R]):
     Usage:
     ```python
 
-    @dataclass
-    class Foo:
-        @Kundera
-        def bar(self):
-            return "baz"
+    >>> @dataclass
+    ... class Foo:
+    ...     @Kundera
+    ...     def bar(self):
+    ...         return "baz"
 
-    foo = Foo()
-    foo.bar
-    >>> "baz"
+    >>> foo = Foo()
+    >>> foo.bar
+    "baz"
     ```
     """
 
