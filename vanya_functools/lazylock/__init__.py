@@ -32,6 +32,7 @@ class LazyLock(Generic[P, R]):
     """
 
     _NOT_FOUND = object()
+    __slots__ = ("lock", "callable_", "result")
 
     def __init__(self, callable_: Callable[P, R]) -> None:
         """
