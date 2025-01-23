@@ -79,7 +79,7 @@ class Kundera(Generic[T, R]):
     ... class Foo:
     ...     @Kundera
     ...     def bar(self):
-    ...         time.sleep(1)
+    ...         time.sleep(0.1)
     ...         return "baz"
 
     ... foo = Foo()
@@ -90,9 +90,9 @@ class Kundera(Generic[T, R]):
     ...     start = time.time()
     ...     tpool.map(lambda foo: foo.bar, [Foo(), Foo()] * 2)
     ...     duration = time.time() - start
-    ...     print(round(duration))
+    ...     print(round(duration, 1))
     ['baz', 'baz', 'baz', 'baz']
-    1
+    0.1
     """
 
     __slots__ = ("_method", "__set_name")
