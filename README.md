@@ -1,6 +1,9 @@
 # vanya_functools
+![](https://github.com/Feiyang472/vanya_functools/actions/workflows/pylint.yml/badge.svg)
+![](https://github.com/Feiyang472/vanya_functools/actions/workflows/ruff.yml/badge.svg)
 
-Vanya is the nickname of Ivan Fyodorovich Karamazov.
+
+Vanya is the nickname of [Ivan Fyodorovich Karamazov](https://en.wikipedia.org/wiki/Ivan_Fyodorovich_Karamazov).
 
 `vanya_functools` provides functional programming tools in python which can be achieved, but not necessarily should be achieved.
 
