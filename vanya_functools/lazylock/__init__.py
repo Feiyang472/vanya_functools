@@ -72,17 +72,26 @@ class Kundera(Generic[T, R]):
 
     Usage:
     ```python
-
+    >>> from dataclasses import dataclass
+    >>> import time
     >>> @dataclass
     ... class Foo:
     ...     @Kundera
     ...     def bar(self):
+    ...         time.sleep(1)
     ...         return "baz"
 
-    >>> foo = Foo()
-    >>> foo.bar
+    ... foo = Foo()
+    ... foo.bar
     "baz"
-    ```
+    >>> from multiprocessing.pool import ThreadPool
+    >>> with ThreadPool(4) as tpool:
+    ...     start = time.time()
+    ...     tpool.map(lambda foo: foo.bar, [Foo(), Foo()] * 2)
+    ...     duration = time.time() - start
+    ...     print(round(duration))
+    ['baz', 'baz', 'baz', 'baz']
+    1
     """
 
     __slots__ = ("_method", "__set_name")
