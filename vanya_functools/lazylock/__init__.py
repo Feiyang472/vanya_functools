@@ -84,6 +84,8 @@ class Kundera(Generic[T, R]):
     ```
     """
 
+    __slots__ = ("_method", "__set_name")
+
     def __init__(self, _method: Callable[[T], R]) -> None:
         """
         Initialize the Kundera with a method.
@@ -92,7 +94,7 @@ class Kundera(Generic[T, R]):
             _method (Callable[[T], R]): The method to be lazily initialized.
         """
         self._method = _method
-        self.__set_name = False
+        self.__set_name = None
 
     def __set_name__(self, owner: Type[T], name):
         """
@@ -120,6 +122,8 @@ class Kundera(Generic[T, R]):
                 ),
             )
             self.__set_name = mangled_name
+        else:
+            raise AttributeError("Cannot set name twice")
 
     @overload
     def __get__(self, instance: None, owner: Type[T]) -> Self: ...
@@ -139,6 +143,8 @@ class Kundera(Generic[T, R]):
             The result of the method if instance is not None, otherwise the descriptor itself.
         """
         if instance is not None:
+            if self.__set_name is None:
+                raise AttributeError("Cannot acquire lock before setting name")
             lazy_lock: LazyLock[[T], R] = getattr(instance, self.__set_name)
             return lazy_lock(instance)
         return self
