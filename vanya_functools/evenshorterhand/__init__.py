@@ -1,3 +1,4 @@
+# pylint: disable=R0903
 """
 This module provides the `Handless` decorator which allows functions to automatically
 use variables from the calling scope if they are not provided as arguments.

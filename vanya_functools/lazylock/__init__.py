@@ -1,3 +1,4 @@
+# pylint: disable=R0903
 """
 Cached property descriptor for dataclasses with support for slots
 and per-instance thread locks.
