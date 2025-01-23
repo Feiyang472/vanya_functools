@@ -50,12 +50,23 @@ class Handless(Generic[P, R]):
 
         Example:
             >>> @Handless
-            ... def multiply(x, y, *, i_am_excel_addicted):
-            ...     return x * y * i_am_excel_addicted
+            ... def multiply(x, y, *, this_appears_in_a_powerpoint):
+            ...     return x * y * this_appears_in_a_powerpoint
             ...
             >>> y = 4
-            >>> multiply(3, i_am_excel_addicted=100)
+            >>> multiply(3, this_appears_in_a_powerpoint=100)
             1200
+
+        By design, Handless will not catch positional-only arguments.
+            >>> @Handless
+            ... def multiply(a, /, b):
+            ...     return a * b
+            ...
+            >>> a = 2
+            >>> multiply(b=3)
+            Traceback (most recent call last):
+                ...
+            TypeError: multiply() missing 1 required positional argument: 'a'
         """
         stack_above = inspect.currentframe().f_back.f_locals
         provided = self.signature.bind_partial(*args, **kwargs).arguments
