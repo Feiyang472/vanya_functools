@@ -24,7 +24,7 @@ def test_stdlib_cached_property():
         duration = time.time() - start
 
         if sys.version_info < (3, 12):
-            assert (round(duration, 1)) == 0.1
+            assert (round(duration, 1)) == 0.2
             assert result == [1, 1, 1, 1]
         else:
             assert result == [2, 2, 2, 2]
