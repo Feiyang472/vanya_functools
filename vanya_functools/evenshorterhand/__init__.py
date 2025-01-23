@@ -5,12 +5,12 @@ use variables from the calling scope if they are not provided as arguments.
 """
 
 import inspect
-from typing import Callable, ParamSpec, TypeVar
+from typing import Callable, Generic, ParamSpec, TypeVar
 
 P = ParamSpec("P")
 R = TypeVar("R")
 
-class Handless:
+class Handless(Generic[P, R]):
     """
     A decorator that allows functions to automatically use variables from the calling scope
     if they are not provided as arguments.
