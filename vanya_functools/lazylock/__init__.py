@@ -75,7 +75,7 @@ class Kundera(Generic[T, R]):
     ```python
     >>> from dataclasses import dataclass
     >>> import time
-    >>> @dataclass
+    >>> @dataclass(slots=True)
     ... class Foo:
     ...     @Kundera
     ...     def bar(self):
@@ -93,6 +93,26 @@ class Kundera(Generic[T, R]):
     ...     print(round(duration, 1))
     ['baz', 'baz', 'baz', 'baz']
     0.1
+
+    Example using stdlib cached_property
+    >>> from dataclasses import dataclass
+    >>> from functools import cached_property
+    >>> import time
+    >>> @dataclass
+    ... class Foo:
+    ...     @cached_property
+    ...     def bar(self):
+    ...         time.sleep(0.1)
+    ...         return "baz"
+
+    >>> from multiprocessing.pool import ThreadPool
+    >>> with ThreadPool(4) as tpool:
+    ...     start = time.time()
+    ...     tpool.map(lambda foo: foo.bar, [Foo(), Foo()] * 2)
+    ...     duration = time.time() - start
+    ...     print(round(duration, 1))
+    ['baz', 'baz', 'baz', 'baz']
+    0.2
     """
 
     __slots__ = ("_method", "__set_name")
@@ -133,7 +153,7 @@ class Kundera(Generic[T, R]):
                 ),
             )
             self.__set_name = mangled_name
-        else:
+        elif self.__set_name != mangled_name:
             raise AttributeError("Cannot set name twice")
 
     @overload
