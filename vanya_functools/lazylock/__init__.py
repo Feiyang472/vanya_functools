@@ -1,3 +1,9 @@
+"""
+Cached property descriptor for dataclasses with support for slots
+and per-instance thread locks.
+"""
+
+
 import functools
 from dataclasses import MISSING, Field
 from threading import Lock
@@ -26,15 +32,15 @@ class LazyLock(Generic[P, R]):
 
     _NOT_FOUND = object()
 
-    def __init__(self, callable: Callable[P, R]) -> None:
+    def __init__(self, callable_: Callable[P, R]) -> None:
         """
-        Initialize the LazyLock with a callable.
+        Initialize the LazyLock with a callable_.
 
         Args:
-            callable (Callable[P, R]): The callable to be lazily executed.
+            callable_ (Callable[P, R]): The callable_ to be lazily executed.
         """
         self.lock = Lock()
-        self.callable = callable
+        self.callable_ = callable_
         self.result = self.__class__._NOT_FOUND
 
     def __call__(self, *args: P.args, **kwargs: P.kwargs):
@@ -54,7 +60,7 @@ class LazyLock(Generic[P, R]):
                 # check if another thread filled cache while we awaited lock
                 val = self.result
                 if val is self.__class__._NOT_FOUND:
-                    val = self.callable(*args, **kwargs)
+                    val = self.callable_(*args, **kwargs)
                     self.result = val
         return val
 
