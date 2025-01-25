@@ -130,7 +130,7 @@ class Kundera(Generic[T, R]):
                     hash=False,
                     compare=False,
                     metadata={},
-                    kw_only=False,
+                    kw_only=True,
                 ),
             )
             self.__set_name = mangled_name
