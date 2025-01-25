@@ -16,6 +16,12 @@ To install `vanya_functools`, use pip:
 pip install vanya_functools
 ```
 
+# Usage
+- `lazylock`: cached property descriptor which behaves differently to the builtin `functools.cached_property` in multithreaded environment.
+- `evenshorterhand`: the world is there for the taking
+- `apoptosis`: work in progress
+
+Consult module level docs for detailed descriptions.
 
 ## Testing
 
