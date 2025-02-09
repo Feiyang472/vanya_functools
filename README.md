@@ -18,8 +18,8 @@ pip install vanya_functools
 
 # Usage
 - `lazylock`: cached property descriptor which behaves differently to the builtin `functools.cached_property` in multithreaded environment.
-- `evenshorterhand`: the world is there for the taking
-- `apoptosis`: work in progress
+- `evenshorterhand`: the world is there for the taking.
+- `apoptosis`: force downstream user of your function to write faster code.
 
 Consult module level docs for detailed descriptions.
 
