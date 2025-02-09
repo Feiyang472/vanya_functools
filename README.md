@@ -2,6 +2,7 @@
 ![](https://github.com/Feiyang472/vanya_functools/actions/workflows/pylint.yml/badge.svg)
 ![](https://github.com/Feiyang472/vanya_functools/actions/workflows/ruff.yml/badge.svg)
 ![](https://github.com/Feiyang472/vanya_functools/actions/workflows/pytest.yml/badge.svg)
+![codecov](https://codecov.io/gh/Feiyang472/vanya_functools/graph/badge.svg?token=LDZ8IZHC8Y)
 
 
 Vanya is the nickname of [Ivan Fyodorovich Karamazov](https://en.wikipedia.org/wiki/Ivan_Fyodorovich_Karamazov).
