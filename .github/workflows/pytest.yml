@@ -21,7 +21,7 @@ jobs:
         pip install pytest-cov
     - name: Test code with pytest-cov
       run: |
-        pytest --cov vanya_functools
+        pytest --cov --cov-report xml vanya_functools
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v5
       with:
