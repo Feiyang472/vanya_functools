@@ -41,7 +41,10 @@ class GarbageRobbist(Generic[R]):
 
         while (self := ref()) is not None and not self.__stop_event.is_set():
 
-            while not self.__deadlines.empty() and self.__deadlines.queue[0][0] < time.time():
+            while not self.__deadlines.empty() and (
+                self.__deadlines.queue[0][0] < time.time()
+                or weakref.getweakrefcount(self.__deadlines.queue[0][1]) == 0
+            ):
                 self.__deadlines.get()
             time.sleep(self.__freq)
 
