@@ -21,25 +21,31 @@ The `Ruthless` decorator makes any value returned by the decorated callable *exp
 >>> time.sleep(0.3)
 >>> foo2 = bar(2)
 >>> dolly = copy.copy(foo1)
->>> print(foo1, foo2, dolly)  # the good old times when all things were access
+>>> print(foo1, foo2, dolly)  # the good old times when all things were accessible
 Foo(arg=1) Foo(arg=2) Foo(arg=1)
-
 >>> time.sleep(0.71)
 >>> try:
 ...     print(foo1, foo2, dolly)
 ... except ReferenceError as err:
 ...     print("foo1 is no longer accessible because {} but foo2 is still {}".format(err, foo2))
-...     print("dolly={} is available because you have transferred ownership to your current scope by shallow copying it.".format(dolly))
 foo1 is no longer accessible because weakly-referenced object no longer exists but foo2 is still Foo(arg=2)
-dolly=Foo(arg=1) is available because you have transferred ownership to your current scope by shallow copying it.
 >>> time.sleep(0.4)
 >>> try:
 ...     print(foo2)
 ... except ReferenceError as err:
-...     print("Now only dolly={} remains...".format(dolly))
-Now only dolly=Foo(arg=1) remains...
+...     pass  # foo2 is also gone
+>>> foo3 = bar(3)
+>>> del bar
+>>> time.sleep(0.02)
+>>> try:
+...     print(foo3)
+... except ReferenceError as err:
+...     print("And then there was only dolly={}...".format(dolly))
+And then there was only dolly=Foo(arg=1)...
 
 ```
+The lifetime of return values are additionally bound by those of the decorated functions from which they came,
+unless the user transfers ownership by explicitly copying data into their scope.
 
 `Ruthless` isn't your run-of-the-mill TTL cache.
 It forces the user to make a choice:
