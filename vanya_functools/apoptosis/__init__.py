@@ -1,18 +1,15 @@
-# pylint: disable=R0903
+# pylint: disable=R0903, W0212
 """
 This module provides the Ruthless decorator which mark returned values of callables
 with a lifetime, after which they will be inaccessible unless explicitly cloned or
 consumed.
 """
 
-import heapq
-import math
 from queue import Queue
 import threading
 import time
 import weakref
-from types import MethodType
-from typing import Callable, Concatenate, Generic, ParamSpec, Type, TypeVar, overload
+from typing import Callable, Generic, ParamSpec, TypeVar
 
 from typing_extensions import Self
 
@@ -60,7 +57,7 @@ class GarbageRobbist(Generic[R]):
 
 class Ruthless(Generic[P, R]):
     """
-    A decorator which wraps a function to return a result which becomes corrupted after the specified ttl.
+    Decorate a function to return a result which becomes corrupted after the specified ttl.
 
     Example:
     >>> from dataclasses import dataclass
