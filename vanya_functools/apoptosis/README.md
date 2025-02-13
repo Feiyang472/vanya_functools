@@ -42,7 +42,6 @@ Now only dolly=Foo(arg=1) remains...
 ```
 
 `Ruthless` isn't your run-of-the-mill TTL cache.
-It doesn't hold your hand or coddle your precious data.
-Instead, it forces you to make a choice:
-1. *Explicit Consumption*: Either copy your data or grab the specific attributes you need, because if you don’t, it’ll vanish into the ether.
-2. *Go fast or go home*: Write algorithms so efficient they finish execution before your data expires—there’s no room for procrastination here.
+It forces the user to make a choice:
+1. *Explicit Consumption*: copy your data or grab the specific attributes you need.
+2. *Go fast or go home*: Write efficient algorithms which finish execution before reference expires.

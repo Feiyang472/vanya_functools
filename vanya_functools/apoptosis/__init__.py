@@ -6,52 +6,58 @@ consumed.
 """
 
 import heapq
+import math
+from queue import Queue
 import threading
 import time
-from typing import Callable, Generic, ParamSpec, TypeVar
 import weakref
+from types import MethodType
+from typing import Callable, Concatenate, Generic, ParamSpec, Type, TypeVar, overload
 
-KT = TypeVar("KT")
+from typing_extensions import Self
+
+T = TypeVar("T")
 P = ParamSpec("P")
 R = TypeVar("R")
 
 
 class GarbageRobbist(Generic[R]):
-    """Keep"""
+    """
+    Maintain the only strong references to weakreffable objects in a queue.
+    Periodically pop expired objects out.
+    """
 
-    def __init__(self, default_ttl: float, collection_freq: float):
+    def __init__(self, ttl: float, collection_freq: float):
+        self.ttl = ttl
+        self.__deadlines = Queue[tuple[float, R]]()
         self.__stop_event = threading.Event()
-        self.default_ttl = default_ttl
-        self.lock = threading.RLock()
-        self.__deadlines: list[tuple[float, R]] = []
-        self.__thread = threading.Thread(target=self.__garbage_robbery, daemon=True)
         self.__freq = collection_freq
-        super().__init__()
+        threading.Thread(
+            target=self.__garbage_robbery, args=(weakref.ref(self),), daemon=True
+        ).start()
 
-    def __garbage_robbery(self):
-        while not self.__stop_event.is_set():
+    @classmethod
+    def __garbage_robbery(cls, ref: Callable[[], Self]):
 
-            while self.__deadlines and self.__deadlines[0][0] < time.time():
-                heapq.heappop(self.__deadlines)
+        while (self := ref()) is not None and not self.__stop_event.is_set():
+
+            while not self.__deadlines.empty() and self.__deadlines.queue[0][0] < time.time():
+                self.__deadlines.get()
             time.sleep(self.__freq)
 
-    def __del__(self):
-        if not self.__thread._started.is_set():
-            return
-        self.__stop_event.set()
-        self.__thread.join()
+            del self
 
-    def push_value(self, value: R, ttl: float | None = None):
-        """Push a value in the heap for auto-poping after some time."""
-        ttl = ttl or self.default_ttl
-        if not self.__thread.is_alive():
-            self.__thread.start()
-        heapq.heappush(self.__deadlines, (time.time() + ttl, value))
+    def __del__(self):
+        self.__stop_event.set()
+
+    def push_value(self, value: R):
+        """Push a value in the queue for auto-poping after some time."""
+        self.__deadlines.put((time.time() + self.ttl, value))
 
 
 class Ruthless(Generic[P, R]):
     """
-    A decorator which wraps a function to return a result which becomes corrupted after 1.0 seconds.
+    A decorator which wraps a function to return a result which becomes corrupted after the specified ttl.
 
     Example:
     >>> from dataclasses import dataclass
