@@ -11,16 +11,16 @@ Vanya is the nickname of [Ivan Fyodorovich Karamazov](https://en.wikipedia.org/w
 
 ## Installation
 
-To install `vanya_functools`, use pip:
+To install `vanya_functools`, clone this repo and use pip:
 
 ```sh
 pip install vanya_functools
 ```
 
 # Usage
-- `lazylock`: cached property descriptor which behaves differently to the builtin `functools.cached_property` in multithreaded environment.
+- `lazylock`: cached property descriptor which behaves differently to the builtin `functools.cached_property` in **multithreaded** environment. If your objects with one or more `cached_property` are ever dispatched into threads, but you've never read CPython source code, you should read [this readme](https://github.com/Feiyang472/vanya_functools/tree/main/vanya_functools/lazylock).
 - `evenshorterhand`: the world is there for the taking.
-- `apoptosis`: force downstream user of your function to write faster code by binding **lifetime** of data to functions.
+- `apoptosis`: force downstream user of your function to write faster code by binding **lifetime** of data to functions and controlling them.
 
 Consult module level docs for detailed descriptions.
 
